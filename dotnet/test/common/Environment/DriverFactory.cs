@@ -61,7 +61,7 @@ namespace OpenQA.Selenium.Environment
             {
                 browser = Browser.Firefox;
                 options = GetDriverOptions<FirefoxOptions>(driverType, driverOptions);
-                service = FirefoxDriverService.CreateDefaultService();
+                service = FirefoxDriverService.CreateDefaultService(DriverFinder.FullPath(options));
                 service.LogLevel = FirefoxDriverLogLevel.Trace;
             }
             else if (typeof(SafariDriver).IsAssignableFrom(driverType))
@@ -74,11 +74,11 @@ namespace OpenQA.Selenium.Environment
 
             if (browser != Browser.All)
             {
-                constructorArgTypeList.Add(this.optionsTypes[browser]);
                 if (service != null)
                 {
                     constructorArgTypeList.Add(typeof(FirefoxDriverService));
                 }
+                constructorArgTypeList.Add(this.optionsTypes[browser]);
                 ConstructorInfo ctorInfo = driverType.GetConstructor(constructorArgTypeList.ToArray());
                 if (ctorInfo != null)
                 {
