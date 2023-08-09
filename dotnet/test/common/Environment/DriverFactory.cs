@@ -37,6 +37,7 @@ namespace OpenQA.Selenium.Environment
         public IWebDriver CreateDriverWithOptions(Type driverType, DriverOptions driverOptions)
         {
             Browser browser = Browser.All;
+            FirefoxDriverService service = null;
             DriverOptions options = null;
 
             List<Type> constructorArgTypeList = new List<Type>();
@@ -60,6 +61,8 @@ namespace OpenQA.Selenium.Environment
             {
                 browser = Browser.Firefox;
                 options = GetDriverOptions<FirefoxOptions>(driverType, driverOptions);
+                service = FirefoxDriverService.CreateDefaultService();
+                service.LogLevel = FirefoxDriverLogLevel.Trace;
             }
             else if (typeof(SafariDriver).IsAssignableFrom(driverType))
             {
@@ -72,9 +75,17 @@ namespace OpenQA.Selenium.Environment
             if (browser != Browser.All)
             {
                 constructorArgTypeList.Add(this.optionsTypes[browser]);
+                if (service != null)
+                {
+                    constructorArgTypeList.Add(typeof(FirefoxDriverService));
+                }
                 ConstructorInfo ctorInfo = driverType.GetConstructor(constructorArgTypeList.ToArray());
                 if (ctorInfo != null)
                 {
+                    if (service != null)
+                    {
+                        return (IWebDriver)ctorInfo.Invoke(new object[] { service, options });
+                    }
                     return (IWebDriver)ctorInfo.Invoke(new object[] { options });
                 }
             }
