@@ -2,7 +2,7 @@
   "ActiveDriverConfig": "Chrome",
   "ActiveWebsiteConfig": "Default",
   "TestWebServerConfig": {
-    "CaptureConsoleOutput": true,
+    "CaptureConsoleOutput": false,
     "HideCommandPromptWindow": true,
     "JavaHomeDirectory": ""
   },
