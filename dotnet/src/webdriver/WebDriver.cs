@@ -21,10 +21,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.VirtualAuth;
 using Microsoft.IdentityModel.Tokens;
+using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium
 {
@@ -644,6 +646,23 @@ namespace OpenQA.Selenium
             }
 
             return capabilitiesDictionary;
+        }
+
+        /// <summary>
+        /// Uses DriverFinder to set Service attributes if necessary when creating the command executor
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        protected static ICommandExecutor GenerateDriverServiceCommandExecutor(DriverService service, TimeSpan commandTimeout, DriverOptions options)
+        {
+            if (service.DriverServicePath == null) {
+                string fullServicePath = DriverFinder.FullPath(options);
+                service.DriverServicePath = Path.GetDirectoryName(fullServicePath);
+                service.DriverServiceExecutableName = Path.GetFileName(fullServicePath);
+            }
+            return new DriverServiceCommandExecutor(service, commandTimeout);
         }
 
         /// <summary>
