@@ -1,4 +1,4 @@
-using OpenQA.Selenium.Remote;
+using System;
 
 namespace OpenQA.Selenium.Firefox
 {
@@ -19,7 +19,7 @@ namespace OpenQA.Selenium.Firefox
         }
 
         public StableChannelFirefoxDriver(FirefoxDriverService service, FirefoxOptions options)
-            : base(service, options)
+            : base(service, options, TimeSpan.FromMinutes(2))
         {
         }
 
