@@ -1,3 +1,5 @@
+using System;
+
 namespace OpenQA.Selenium.Chrome
 {
     public class StableChannelChromeDriver : ChromeDriver
@@ -15,7 +17,7 @@ namespace OpenQA.Selenium.Chrome
 
 
         public StableChannelChromeDriver(ChromeDriverService service, ChromeOptions options)
-            : base(service, options)
+            : base(service, options, TimeSpan.FromSeconds(120))
         {
         }
 
