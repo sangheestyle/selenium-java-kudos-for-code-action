@@ -193,6 +193,23 @@ namespace OpenQA.Selenium.Firefox
         }
 
         /// <summary>
+        /// Uses DriverFinder to set Service attributes if necessary when creating the command executor
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private static ICommandExecutor GenerateDriverServiceCommandExecutor(DriverService service, TimeSpan commandTimeout, DriverOptions options)
+        {
+            if (service.DriverServicePath == null) {
+                string fullServicePath = DriverFinder.FullPath(options);
+                service.DriverServicePath = Path.GetDirectoryName(fullServicePath);
+                service.DriverServiceExecutableName = Path.GetFileName(fullServicePath);
+            }
+            return new DriverServiceCommandExecutor(service, commandTimeout);
+        }
+
+        /// <summary>
         /// Gets a read-only dictionary of the custom WebDriver commands defined for FirefoxDriver.
         /// The keys of the dictionary are the names assigned to the command; the values are the
         /// <see cref="CommandInfo"/> objects describing the command behavior.
