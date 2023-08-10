@@ -68,7 +68,7 @@
       "AssemblyName": "WebDriver.Common.Tests",
       "BrowserValue": "Firefox",
       "RemoteCapabilities": "firefox",
-      "Logging": false
+      "Logging": true
     },
 
     "FirefoxNightly": {
