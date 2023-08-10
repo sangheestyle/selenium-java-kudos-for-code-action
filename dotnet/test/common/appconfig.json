@@ -28,7 +28,7 @@
       "AssemblyName": "WebDriver.Common.Tests",
       "BrowserValue": "Chrome",
       "RemoteCapabilities": "chrome",
-      "Logging": false
+      "Logging": true
     },
 
     "ChromeDev": {
