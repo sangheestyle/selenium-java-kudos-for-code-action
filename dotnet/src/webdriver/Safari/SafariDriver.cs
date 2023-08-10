@@ -79,7 +79,7 @@ namespace OpenQA.Selenium.Safari
         /// </summary>
         /// <param name="options">The <see cref="SafariOptions"/> to use for this <see cref="SafariDriver"/> instance.</param>
         public SafariDriver(SafariOptions options)
-            : this(SafariDriverService.CreateDefaultService(options), options)
+            : this(SafariDriverService.CreateDefaultService(), options)
         {
         }
 
@@ -143,7 +143,7 @@ namespace OpenQA.Selenium.Safari
         /// <param name="options">The <see cref="SafariOptions"/> to be used with the Safari driver.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public SafariDriver(SafariDriverService service, SafariOptions options, TimeSpan commandTimeout)
-            : base(new DriverServiceCommandExecutor(service, commandTimeout), ConvertOptionsToCapabilities(options))
+            : base(GenerateDriverServiceCommandExecutor(service, commandTimeout, options), ConvertOptionsToCapabilities(options))
         {
             this.AddCustomSafariCommand(AttachDebuggerCommand, HttpCommandInfo.PostCommand, "/session/{sessionId}/apple/attach_debugger");
             this.AddCustomSafariCommand(GetPermissionsCommand, HttpCommandInfo.GetCommand, "/session/{sessionId}/apple/permissions");
