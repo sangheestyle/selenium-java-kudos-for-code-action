@@ -113,12 +113,10 @@ namespace OpenQA.Selenium
             }
 
             Dictionary<string, object> output = RunCommand(binaryFullPath, argsBuilder.ToString());
-            string browserPath = (string)output["browser_path"];
             string driverPath = (string)output["driver_path"];
 
             try
             {
-                options.BinaryLocation = browserPath;
                 options.BrowserVersion = null;
             }
             catch (NotImplementedException e)
