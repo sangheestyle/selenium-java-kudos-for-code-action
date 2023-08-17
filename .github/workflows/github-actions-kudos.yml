@@ -21,3 +21,4 @@ jobs:
           generate-nomerges: true
           generate-validemails: true
           generate-limitdepth: 2
+          ink-chunkSize: 5000
